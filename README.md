@@ -1,8 +1,8 @@
 # A/B Testing Statistical Decision Engine
 
-A small statistical engine that simulates an A/B experiment and determines whether a product change leads to a **statistically significant improvement**.
+A small statistical engine that evaluates whether a product change leads to a **statistically significant improvement** using A/B testing.
 
-This project demonstrates core **inferential statistics concepts used in real-world experimentation systems**.
+This project demonstrates **inferential statistics concepts used in real-world experimentation systems**.
 
 ---
 
@@ -12,14 +12,11 @@ Companies frequently run **A/B experiments** to test whether a new feature impro
 
 * Conversion rate
 * Click-through rate
-* Purchase probability
 * Signup rate
+* Purchase probability
 
-However, observed differences may occur due to **random variation**.
-
-This project implements a statistical workflow that answers:
-
-**"Is the observed improvement statistically significant?"**
+Observed differences may occur due to **random variation**.
+This engine determines whether the improvement is **statistically significant**.
 
 ---
 
@@ -27,48 +24,27 @@ This project implements a statistical workflow that answers:
 
 | Group                   | Users | Conversion Rate |
 | ----------------------- | ----- | --------------- |
-| Control (Old Version)   | 1000  | 10%             |
-| Treatment (New Version) | 1000  | 13%             |
+| Control (Old Version)   | 1000  | ~10%            |
+| Treatment (New Version) | 1000  | ~13%            |
 
 Observed improvement: **+3.1%**
 
-The system determines whether this difference is **real or random noise**.
+The statistical engine evaluates whether this improvement is **real or due to noise**.
 
 ---
 
 ## Statistical Pipeline
 
-The notebook performs the following steps:
+The system performs:
 
-1. Simulate experiment data
-2. Compute descriptive statistics
-3. Estimate uncertainty using standard error
-4. Compute pooled standard error
-5. Calculate t-statistic
-6. Compute p-value
-7. Make statistical decision
-
----
-
-## Mathematical Formulation
-
-Difference in means:
-
-[
-\Delta = \bar{x}*{treatment} - \bar{x}*{control}
-]
-
-Pooled standard error:
-
-[
-SE = \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
-]
-
-t-statistic:
-
-[
-t = \frac{\Delta}{SE}
-]
+1. Experiment simulation
+2. Mean conversion calculation
+3. Standard deviation estimation
+4. Standard error computation
+5. Two-sample t-test
+6. p-value calculation
+7. Confidence interval estimation
+8. Statistical decision
 
 Decision rule:
 
@@ -88,23 +64,52 @@ ab-testing-stat-engine
 │   └── ab_testing.ipynb
 │
 ├── src/
+│   └── ab_test_engine.py
 │
 ├── data/
 │
 └── README.md
 ```
 
+### src/
+
+Contains the reusable statistical engine:
+
+```
+run_ab_test()
+simulate_experiment()
+```
+
+### notebooks/
+
+Demonstrates how to run the experiment and visualize results.
+
 ---
 
-## Key Concepts Demonstrated
+## Example Output
 
-* Inferential Statistics
-* Hypothesis Testing
-* A/B Testing
-* Standard Error
-* t-statistic
-* p-value interpretation
-* Statistical decision making
+```
+A/B TEST SUMMARY
+----------------------
+Control conversion rate: 0.100
+Treatment conversion rate: 0.131
+
+Difference: 0.031
+
+t-statistic: 2.170
+p-value: 0.0301
+
+Control CI: (0.081, 0.118)
+Treatment CI: (0.110, 0.151)
+
+Decision: Reject H0 (Significant difference)
+```
+
+---
+
+## Visualization
+
+The notebook also visualizes conversion rates with **95% confidence intervals**.
 
 ---
 
@@ -112,18 +117,20 @@ ab-testing-stat-engine
 
 * Python
 * NumPy
-* Pandas
-* Matplotlib
 * SciPy
+* Matplotlib
+* Jupyter
 
 ---
 
-## Future Improvements
+## Concepts Demonstrated
 
-* Confidence intervals for conversion rates
-* Visualization dashboard
-* Automated experiment simulator
-* Bayesian A/B testing comparison
+* A/B Testing
+* Hypothesis Testing
+* t-statistic
+* p-value
+* Confidence Intervals
+* Inferential Statistics
 
 ---
 
