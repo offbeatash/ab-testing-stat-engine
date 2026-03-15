@@ -40,3 +40,12 @@ def run_ab_test(control, treatment, alpha=0.05):
         "treatment_ci": treatment_ci,
         "decision": decision
     }
+
+def simulate_experiment(n_users, control_rate, treatment_rate, seed=42):
+    import numpy as np
+    np.random.seed(seed)
+
+    control = np.random.binomial(1, control_rate, n_users)
+    treatment = np.random.binomial(1, treatment_rate, n_users)
+
+    return control, treatment
